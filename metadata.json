@@ -1,0 +1,6 @@
+{
+  "name": "ANNIVO",
+  "description": "Zero-commission food delivery connecting local Indian restaurants with real-time tracking, secure Razorpay integration, loyalty rewards, and 24/7 support.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

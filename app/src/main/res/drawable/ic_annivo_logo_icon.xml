@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="64dp"
+    android:height="64dp"
+    android:viewportWidth="100"
+    android:viewportHeight="100">
+    
+    <!-- Stylized 'A' shape in Annivo Orange -->
+    <path
+        android:fillColor="#FFFF6D00"
+        android:pathData="M50,15 C56,15 61,21 65,28 L82,68 C85,74 82,81 74,81 C70,81 67,77 65,74 L60,60 L40,60 L35,74 C33,77 30,81 26,81 C18,81 15,74 18,68 L35,28 C39,21 44,15 50,15 Z" />
+
+    <!-- Spoon silhouette carved inside the crossbar in clean white -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M50,32 C54,32 57,36 54,41 L49,51 C48,53 45,55 42,55 C39,55 37,52 39,49 L42,45 C43,43 46,32 50,32 Z" />
+
+    <!-- 3 Speed lines on the left side, representing rapid food delivery -->
+    <path
+        android:fillColor="#FFFF6D00"
+        android:pathData="M12,37 h14 c1.5,0 2.5,1 2.5,2.5 c0,1.5 -1,2.5 -2.5,2.5 H12 c-1.5,0 -2.5,-1 -2.5,-2.5 c0,-1.5 1,-2.5 2.5,-2.5 z" />
+    <path
+        android:fillColor="#FFFF6D00"
+        android:pathData="M7,47 h19 c1.5,0 2.5,1 2.5,2.5 c0,1.5 -1,2.5 -2.5,2.5 H7 c-1.5,0 -2.5,-1 -2.5,-2.5 c0,-1.5 1,-2.5 2.5,-2.5 z" />
+    <path
+        android:fillColor="#FFFF6D00"
+        android:pathData="M15,57 h11 c1.5,0 2.5,1 2.5,2.5 c0,1.5 -1,2.5 -2.5,2.5 H15 c-1.5,0 -2.5,-1 -2.5,-2.5 c0,-1.5 1,-2.5 2.5,-2.5 z" />
+</vector>
