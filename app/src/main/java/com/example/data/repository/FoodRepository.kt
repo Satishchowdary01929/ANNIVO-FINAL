@@ -339,23 +339,13 @@ class FoodRepository(private val db: AppDatabase) {
         // Clear cart
         cartItemDao.clearCart()
 
-        // Update Loyalty profile (Adding points and summing commission saved)
+        // Update Loyalty profile using KMP business engine
         val profile = loyaltyProfile.first() ?: LoyaltyProfileEntity()
-        val newPoints = profile.totalPoints + pointsEarned
-        val newSavedCommission = profile.totalSavedCommissionRs + savedCommission
-        val newTier = when {
-            newPoints >= 1000 -> "Platinum"
-            newPoints >= 500 -> "Gold"
-            newPoints >= 250 -> "Silver"
-            else -> "Bronze"
-        }
-        loyaltyProfileDao.insertOrUpdateProfile(
-            profile.copy(
-                totalPoints = newPoints,
-                tier = newTier,
-                totalSavedCommissionRs = newSavedCommission
-            )
+        val kmpProfile = profile.toKmpModel()
+        val updatedKmpProfile = com.example.data.business.AnnivoBusinessEngine.updateProfileWithOrder(
+            kmpProfile, pointsEarned, savedCommission
         )
+        loyaltyProfileDao.insertOrUpdateProfile(updatedKmpProfile.toEntity())
 
         // Trigger asynchronous real-time simulation updates
         simulateOrderProgress(orderId)
@@ -420,27 +410,7 @@ class FoodRepository(private val db: AppDatabase) {
     }
 
     private fun generateSupportReply(query: String): String {
-        val q = query.lowercase()
-        return when {
-            q.contains("refund") || q.contains("cancel") -> {
-                "Since ANNIVO utilizes secure Razorpay integration, any canceled orders are instantly refunded! Your refund (if applicable) will reflect in your payment source within 2-3 business hours. Can I assist you with a specific order ID?"
-            }
-            q.contains("charge") || q.contains("delivery") || q.contains("fee") -> {
-                "ANNIVO keeps delivery charges extremely low and transparent! Delivery is completely FREE on all orders above ₹300. For orders below ₹300, a nominal charge of ₹30 is applied to support our local delivery fleet."
-            }
-            q.contains("razorpay") || q.contains("payment") || q.contains("fail") -> {
-                "Our payments are fully secured via the Razorpay gateway. We support UPI (GPay, PhonePe), credit cards, debit cards, and netbanking. If a transaction fails but money is debited, Razorpay auto-reverses it within 24 hours. Your transaction is completely secure!"
-            }
-            q.contains("tracking") || q.contains("where is my food") || q.contains("delay") || q.contains("order") -> {
-                "You can track your active deliveries in real-time under the 'Orders' tab. You'll see the exact step-by-step courier progress (Confirmed ➔ Preparing ➔ Out for Delivery ➔ Arrived). If your driver is delayed, please hold tight, we make sure they drive safely!"
-            }
-            q.contains("rewards") || q.contains("loyalty") || q.contains("points") -> {
-                "Every ₹10 spent on ANNIVO earns you 1 Loyalty Point! You can view and redeem your points directly in the Rewards tab for exciting food discount vouchers and free item coupons."
-            }
-            else -> {
-                "Thanks for reaching out! A human ANNIVO support agent is always online. Your query is being logged, and we'll resolve any issues instantly. For immediate food tracking or Razorpay inquiries, explore our main navigation tabs! 🍔🏍️"
-            }
-        }
+        return com.example.data.business.AnnivoBusinessEngine.generateSupportReply(query)
     }
 
     suspend fun createSupportTicket(subject: String, category: String, description: String): SupportTicketEntity {
@@ -474,3 +444,44 @@ class FoodRepository(private val db: AppDatabase) {
         loyaltyProfileDao.insertOrUpdateProfile(profile)
     }
 }
+
+fun LoyaltyProfileEntity.toKmpModel(): com.example.data.model.LoyaltyProfile {
+    return com.example.data.model.LoyaltyProfile(
+        id = id,
+        totalPoints = totalPoints,
+        tier = tier,
+        totalSavedCommissionRs = totalSavedCommissionRs,
+        name = name,
+        email = email,
+        password = password,
+        phone = phone,
+        homeAddress = homeAddress,
+        workAddress = workAddress,
+        savedCardName = savedCardName,
+        savedCardNo = savedCardNo,
+        savedUpi = savedUpi,
+        isLoggedIn = isLoggedIn,
+        hasCompletedProfile = hasCompletedProfile
+    )
+}
+
+fun com.example.data.model.LoyaltyProfile.toEntity(): LoyaltyProfileEntity {
+    return LoyaltyProfileEntity(
+        id = id,
+        totalPoints = totalPoints,
+        tier = tier,
+        totalSavedCommissionRs = totalSavedCommissionRs,
+        name = name,
+        email = email,
+        password = password,
+        phone = phone,
+        homeAddress = homeAddress,
+        workAddress = workAddress,
+        savedCardName = savedCardName,
+        savedCardNo = savedCardNo,
+        savedUpi = savedUpi,
+        isLoggedIn = isLoggedIn,
+        hasCompletedProfile = hasCompletedProfile
+    )
+}
+
