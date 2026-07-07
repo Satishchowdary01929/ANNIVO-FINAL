@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.data.local.AppDatabase
 import com.example.data.local.entities.*
 import com.example.data.repository.FoodRepository
+import com.example.data.remote.FirebaseSyncManager
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.delay
@@ -387,6 +388,16 @@ class FoodViewModel(application: Application) : AndroidViewModel(application) {
             } catch (e: Exception) {
                 onCaptured("Plot 55, Image Gardens Road, Madhapur, Hyderabad, Telangana, 500081")
             }
+        }
+    }
+
+    fun triggerBulkSync() {
+        viewModelScope.launch {
+            val profile = repository.loyaltyProfile.first()
+            val orders = repository.orders.first()
+            val tickets = repository.supportTickets.first()
+            val messages = repository.supportMessages.first()
+            FirebaseSyncManager.bulkSyncOfflineData(profile, orders, tickets, messages)
         }
     }
 }

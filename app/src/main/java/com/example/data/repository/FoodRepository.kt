@@ -2,6 +2,7 @@ package com.example.data.repository
 
 import com.example.data.local.AppDatabase
 import com.example.data.local.entities.*
+import com.example.data.remote.FirebaseSyncManager
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -335,6 +336,7 @@ class FoodRepository(private val db: AppDatabase) {
 
         // Insert order
         orderDao.insertOrder(newOrder)
+        FirebaseSyncManager.syncOrder(newOrder)
 
         // Clear cart
         cartItemDao.clearCart()
@@ -345,7 +347,9 @@ class FoodRepository(private val db: AppDatabase) {
         val updatedKmpProfile = com.example.data.business.AnnivoBusinessEngine.updateProfileWithOrder(
             kmpProfile, pointsEarned, savedCommission
         )
-        loyaltyProfileDao.insertOrUpdateProfile(updatedKmpProfile.toEntity())
+        val finalProfile = updatedKmpProfile.toEntity()
+        loyaltyProfileDao.insertOrUpdateProfile(finalProfile)
+        FirebaseSyncManager.syncProfile(finalProfile)
 
         // Trigger asynchronous real-time simulation updates
         simulateOrderProgress(orderId)
@@ -379,33 +383,33 @@ class FoodRepository(private val db: AppDatabase) {
                 updatedPoints >= 250 -> "Silver"
                 else -> "Bronze"
             }
-            loyaltyProfileDao.insertOrUpdateProfile(
-                profile.copy(totalPoints = updatedPoints, tier = updatedTier)
-            )
+            val finalProfile = profile.copy(totalPoints = updatedPoints, tier = updatedTier)
+            loyaltyProfileDao.insertOrUpdateProfile(finalProfile)
+            FirebaseSyncManager.syncProfile(finalProfile)
         }
     }
 
     suspend fun sendSupportMessage(text: String) {
         // Insert user message
-        supportMessageDao.insertMessage(
-            SupportMessageEntity(
-                sender = "user",
-                text = text,
-                timestamp = System.currentTimeMillis()
-            )
+        val userMsg = SupportMessageEntity(
+            sender = "user",
+            text = text,
+            timestamp = System.currentTimeMillis()
         )
+        supportMessageDao.insertMessage(userMsg)
+        FirebaseSyncManager.syncSupportMessage(userMsg)
 
         // Simulate support bot response
         CoroutineScope(Dispatchers.IO).launch {
             delay(1000)
             val replyText = generateSupportReply(text)
-            supportMessageDao.insertMessage(
-                SupportMessageEntity(
-                    sender = "agent",
-                    text = replyText,
-                    timestamp = System.currentTimeMillis()
-                )
+            val replyMsg = SupportMessageEntity(
+                sender = "agent",
+                text = replyText,
+                timestamp = System.currentTimeMillis()
             )
+            supportMessageDao.insertMessage(replyMsg)
+            FirebaseSyncManager.syncSupportMessage(replyMsg)
         }
     }
 
@@ -424,24 +428,36 @@ class FoodRepository(private val db: AppDatabase) {
             timestamp = System.currentTimeMillis()
         )
         supportTicketDao.insertTicket(ticket)
+        FirebaseSyncManager.syncSupportTicket(ticket)
         
         // Also insert an automated support response related to the ticket
-        supportMessageDao.insertMessage(
-            SupportMessageEntity(
-                sender = "agent",
-                text = "Ticket $ticketId has been created successfully under category '$category'. Our support team is reviewing your issue regarding: \"$subject\". We will update you here!",
-                timestamp = System.currentTimeMillis()
-            )
+        val autoReply = SupportMessageEntity(
+            sender = "agent",
+            text = "Ticket $ticketId has been created successfully under category '$category'. Our support team is reviewing your issue regarding: \"$subject\". We will update you here!",
+            timestamp = System.currentTimeMillis()
         )
+        supportMessageDao.insertMessage(autoReply)
+        FirebaseSyncManager.syncSupportMessage(autoReply)
         return ticket
     }
 
     suspend fun updateTicketStatus(ticketId: String, status: String) {
         supportTicketDao.updateTicketStatus(ticketId, status)
+        // Optionally fetch and sync the updated ticket state
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                val tickets = supportTickets.first()
+                val updatedTicket = tickets.find { it.id == ticketId }
+                if (updatedTicket != null) {
+                    FirebaseSyncManager.syncSupportTicket(updatedTicket)
+                }
+            } catch (e: Exception) {}
+        }
     }
 
     suspend fun updateProfile(profile: LoyaltyProfileEntity) {
         loyaltyProfileDao.insertOrUpdateProfile(profile)
+        FirebaseSyncManager.syncProfile(profile)
     }
 }
 
