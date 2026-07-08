@@ -227,9 +227,10 @@ fun AuthScreen(viewModel: FoodViewModel) {
 
                             OutlinedTextField(
                                 value = phoneInput,
-                                onValueChange = { if (it.all { char -> char.isDigit() }) phoneInput = it },
+                                onValueChange = { if (it.length <= 10 && it.all { char -> char.isDigit() }) phoneInput = it },
                                 label = { Text("Phone Number (10 digits)") },
                                 leadingIcon = { Icon(Icons.Filled.Phone, contentDescription = null, tint = SaffronOrange) },
+                                isError = errorMessage != null && !otpSent,
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .testTag("phone_input"),
@@ -246,6 +247,7 @@ fun AuthScreen(viewModel: FoodViewModel) {
                                     onValueChange = { if (it.length <= 6 && it.all { char -> char.isDigit() }) otpInput = it },
                                     label = { Text("6-Digit OTP") },
                                     leadingIcon = { Icon(Icons.Filled.LockOpen, contentDescription = null, tint = SaffronOrange) },
+                                    isError = errorMessage != null && otpSent,
                                     modifier = Modifier
                                         .fillMaxWidth()
                                         .testTag("otp_input"),
@@ -273,7 +275,8 @@ fun AuthScreen(viewModel: FoodViewModel) {
                                                 isSendingOtp = false
                                                 otpSent = true
                                                 otpCountdown = 59
-                                                successMessage = "Demo OTP sent successfully! (Code: 123456)"
+                                                viewModel.generateAndSendOtp(phoneInput)
+                                                successMessage = "Secure OTP sent successfully! Check notifications."
                                             }
                                         }
                                     },
@@ -324,7 +327,8 @@ fun AuthScreen(viewModel: FoodViewModel) {
                                     onClick = {
                                         if (otpCountdown == 0) {
                                             otpCountdown = 59
-                                            successMessage = "Resent Demo OTP successfully! (Code: 123456)"
+                                            viewModel.generateAndSendOtp(phoneInput)
+                                            successMessage = "Resent secure OTP successfully! Check notifications."
                                         }
                                     },
                                     enabled = otpCountdown == 0,

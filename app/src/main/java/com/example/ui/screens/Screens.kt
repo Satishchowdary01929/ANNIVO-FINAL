@@ -37,6 +37,7 @@ import com.example.ui.theme.*
 import com.example.ui.components.*
 import com.example.ui.viewmodel.FoodViewModel
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.delay
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -49,16 +50,18 @@ fun MainAppScreen(viewModel: FoodViewModel) {
     val currentScreen by viewModel.currentScreen.collectAsState()
     val loyaltyProfile by viewModel.loyaltyProfile.collectAsState()
     val cartCount by viewModel.cartItems.map { it.sumOf { item -> item.quantity } }.collectAsState(0)
+    val headsUpMessage by viewModel.headsUpMessage.collectAsState()
 
     val isLoggedIn = loyaltyProfile?.isLoggedIn == true
     val hasCompletedProfile = loyaltyProfile?.hasCompletedProfile == true
 
-    if (!isLoggedIn) {
-        AuthScreen(viewModel = viewModel)
-    } else if (!hasCompletedProfile) {
-        SetupProfileScreen(viewModel = viewModel)
-    } else {
-        Scaffold(
+    Box(modifier = Modifier.fillMaxSize()) {
+        if (!isLoggedIn) {
+            AuthScreen(viewModel = viewModel)
+        } else if (!hasCompletedProfile) {
+            SetupProfileScreen(viewModel = viewModel)
+        } else {
+            Scaffold(
             bottomBar = {
                 NavigationBar(
                     tonalElevation = 8.dp,
@@ -153,6 +156,115 @@ fun MainAppScreen(viewModel: FoodViewModel) {
                         "support" -> SupportScreen(viewModel)
                         "profile" -> ProfileSettingsScreen(viewModel)
                     }
+                }
+            }
+        }
+    }
+
+    // Heads-up Notification Banner overlay sliding down from top
+    headsUpMessage?.let { otp ->
+        HeadsUpNotificationBanner(otp = otp) {
+            viewModel.dismissHeadsUpMessage()
+        }
+    }
+}
+}
+
+@Composable
+fun HeadsUpNotificationBanner(otp: String, onDismiss: () -> Unit) {
+    var visible by remember { mutableStateOf(false) }
+    
+    LaunchedEffect(otp) {
+        visible = true
+        delay(6000) // Keep visible for 6 seconds
+        visible = false
+        delay(300) // Let exit animation finish
+        onDismiss()
+    }
+    
+    AnimatedVisibility(
+        visible = visible,
+        enter = slideInVertically(initialOffsetY = { -it }) + fadeIn(),
+        exit = slideOutVertically(targetOffsetY = { -it }) + fadeOut(),
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(16.dp)
+            .statusBarsPadding()
+    ) {
+        Card(
+            modifier = Modifier
+                .fillMaxWidth()
+                .shadow(12.dp, RoundedCornerShape(16.dp)),
+            shape = RoundedCornerShape(16.dp),
+            colors = CardDefaults.cardColors(containerColor = Color(0xFF1E1E24)) // Sleek Dark Charcoal
+        ) {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                // Circular SMS message icon
+                Box(
+                    modifier = Modifier
+                        .size(40.dp)
+                        .background(Color(0xFF2E6FF2), CircleShape)
+                        .clip(CircleShape),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Icon(
+                        imageVector = Icons.Filled.Sms,
+                        contentDescription = "SMS",
+                        tint = Color.White,
+                        modifier = Modifier.size(22.dp)
+                    )
+                }
+                
+                Spacer(modifier = Modifier.width(12.dp))
+                
+                Column(modifier = Modifier.weight(1f)) {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Text(
+                            text = "MESSAGES • Just Now",
+                            fontSize = 11.sp,
+                            fontWeight = FontWeight.Bold,
+                            color = Color(0xFF2E6FF2),
+                            letterSpacing = 1.sp
+                        )
+                        IconButton(
+                            onClick = {
+                                visible = false
+                                onDismiss()
+                            },
+                            modifier = Modifier.size(20.dp)
+                        ) {
+                            Icon(
+                                imageVector = Icons.Filled.Close,
+                                contentDescription = "Dismiss",
+                                tint = Color.Gray,
+                                modifier = Modifier.size(14.dp)
+                            )
+                        }
+                    }
+                    Spacer(modifier = Modifier.height(2.dp))
+                    Text(
+                        text = "ANNIVO Secure login verification code:",
+                        fontSize = 12.sp,
+                        fontWeight = FontWeight.SemiBold,
+                        color = Color.LightGray
+                    )
+                    Spacer(modifier = Modifier.height(2.dp))
+                    Text(
+                        text = otp,
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = Color.White,
+                        letterSpacing = 2.sp
+                    )
                 }
             }
         }

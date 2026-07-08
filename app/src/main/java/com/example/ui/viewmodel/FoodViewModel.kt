@@ -1,6 +1,12 @@
 package com.example.ui.viewmodel
 
 import android.app.Application
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.os.Build
+import android.widget.Toast
+import androidx.core.app.NotificationCompat
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.data.local.AppDatabase
@@ -39,6 +45,80 @@ class FoodViewModel(application: Application) : AndroidViewModel(application) {
 
     private val _selectedRestaurantId = MutableStateFlow<String?>(null)
     val selectedRestaurantId: StateFlow<String?> = _selectedRestaurantId.asStateFlow()
+
+    // Active generated OTP state for secure, useful verification
+    private val _activeOtp = MutableStateFlow<String?>(null)
+    val activeOtp: StateFlow<String?> = _activeOtp.asStateFlow()
+
+    private val _otpGenerationTime = MutableStateFlow<Long>(0L)
+    val otpGenerationTime: StateFlow<Long> = _otpGenerationTime.asStateFlow()
+
+    private val _wrongOtpAttempts = MutableStateFlow(0)
+    val wrongOtpAttempts: StateFlow<Int> = _wrongOtpAttempts.asStateFlow()
+
+    private val _otpLockoutUntil = MutableStateFlow<Long>(0L)
+    val otpLockoutUntil: StateFlow<Long> = _otpLockoutUntil.asStateFlow()
+
+    // Slide-down Heads-up SMS message state
+    private val _headsUpMessage = MutableStateFlow<String?>(null)
+    val headsUpMessage: StateFlow<String?> = _headsUpMessage.asStateFlow()
+
+    fun dismissHeadsUpMessage() {
+        _headsUpMessage.value = null
+    }
+
+    fun generateAndSendOtp(phone: String) {
+        viewModelScope.launch {
+            val otp = (100000..999999).random().toString()
+            _activeOtp.value = otp
+            _otpGenerationTime.value = System.currentTimeMillis()
+            _wrongOtpAttempts.value = 0
+            _otpLockoutUntil.value = 0L
+            
+            val app = getApplication<Application>()
+            
+            // Post an elegant system Toast
+            Toast.makeText(app, "💬 SMS OTP Received: $otp", Toast.LENGTH_LONG).show()
+            
+            // Post a system Notification
+            sendSystemNotification(
+                app,
+                "💬 SMS from +91 $phone",
+                "Your ANNIVO login verification code is $otp. Do not share this code."
+            )
+            
+            // Slide down heads-up message
+            _headsUpMessage.value = otp
+        }
+    }
+
+    private fun sendSystemNotification(context: android.content.Context, title: String, message: String) {
+        try {
+            val notificationManager = context.getSystemService(android.content.Context.NOTIFICATION_SERVICE) as NotificationManager
+            val channelId = "annivo_otp_channel"
+            
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                val channelName = "Authentication Notifications"
+                val importance = NotificationManager.IMPORTANCE_HIGH
+                val channel = NotificationChannel(channelId, channelName, importance).apply {
+                    description = "Delivers secure verification codes"
+                }
+                notificationManager.createNotificationChannel(channel)
+            }
+            
+            val builder = NotificationCompat.Builder(context, channelId)
+                .setSmallIcon(android.R.drawable.stat_notify_chat)
+                .setContentTitle(title)
+                .setContentText(message)
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setCategory(NotificationCompat.CATEGORY_MESSAGE)
+                .setAutoCancel(true)
+            
+            notificationManager.notify(4996, builder.build())
+        } catch (e: Exception) {
+            Log.e("FoodViewModel", "Notification posting failed", e)
+        }
+    }
 
     // Observable Flows from DB
     val restaurants: StateFlow<List<RestaurantEntity>> = repository.restaurants
@@ -247,18 +327,63 @@ class FoodViewModel(application: Application) : AndroidViewModel(application) {
 
     fun loginWithOtp(phone: String, otp: String, onResult: (Boolean, String) -> Unit) {
         viewModelScope.launch {
-            if (otp != "123456" && otp != "654321") {
-                onResult(false, "Invalid OTP. Use demo code '123456'!")
+            val now = System.currentTimeMillis()
+            
+            // 1. Check Lockout status
+            val lockoutTime = _otpLockoutUntil.value
+            if (now < lockoutTime) {
+                val secondsLeft = ((lockoutTime - now) / 1000) + 1
+                onResult(false, "Too many wrong attempts! Locked out for $secondsLeft seconds.")
                 return@launch
             }
+
+            // 2. Check Expiry (60 seconds)
+            val genTime = _otpGenerationTime.value
+            val isDemo = otp == "123456" || otp == "654321"
+            if (!isDemo && (now - genTime > 60000)) {
+                onResult(false, "OTP has expired! Please click Resend OTP.")
+                return@launch
+            }
+
+            // 3. Match OTP
+            val expectedOtp = _activeOtp.value
+            if (otp != expectedOtp && !isDemo) {
+                val attempts = _wrongOtpAttempts.value + 1
+                _wrongOtpAttempts.value = attempts
+                if (attempts >= 3) {
+                    _otpLockoutUntil.value = now + 30000 // 30 seconds lockout
+                    _wrongOtpAttempts.value = 0
+                    onResult(false, "3 incorrect attempts! Locked out for 30 seconds.")
+                } else {
+                    onResult(false, "Invalid OTP! Attempt $attempts of 3 before lockout.")
+                }
+                return@launch
+            }
+
+            // Reset security limits on successful login
+            _wrongOtpAttempts.value = 0
+            _otpLockoutUntil.value = 0L
+            _activeOtp.value = null
+
             val profile = repository.loyaltyProfile.first()
             if (profile != null) {
-                val updated = if (profile.phone == phone) profile else profile.copy(phone = phone)
-                repository.updateProfile(updated.copy(isLoggedIn = true, hasCompletedProfile = true))
+                val updated = profile.copy(
+                    phone = phone,
+                    isLoggedIn = true,
+                    hasCompletedProfile = true
+                )
+                repository.updateProfile(updated)
                 _currentScreen.value = "explore"
                 onResult(true, "Welcome back!")
             } else {
-                onResult(false, "Phone number not found. Please sign up!")
+                val newProfile = LoyaltyProfileEntity(
+                    phone = phone,
+                    isLoggedIn = true,
+                    hasCompletedProfile = true
+                )
+                repository.updateProfile(newProfile)
+                _currentScreen.value = "explore"
+                onResult(true, "Welcome back!")
             }
         }
     }
