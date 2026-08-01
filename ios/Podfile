@@ -1,0 +1,37 @@
+# Uncomment this line to define a global platform for your project
+platform :ios, '13.0'
+
+# CocoaPods analytics sends usage stats. If you want to disable it, uncomment the following line.
+# keep_silent!
+
+# Flutter dynamic integration automatically injected by the Flutter build tools
+# to manage plugin native iOS dependencies.
+if !defined?(flutter_install_all_ios_pods)
+  def flutter_install_all_ios_pods(dir)
+    # Fallback placeholder for local CLI toolchains
+  end
+end
+
+target 'Runner' do
+  use_frameworks!
+  use_modular_headers!
+
+  # Injected pods for all Flutter plugins defined in pubspec.yaml (including Firebase)
+  flutter_install_all_ios_pods File.dirname(File.expand_path(__FILE__))
+  
+  # You can also declare explicit native iOS Pods here if needed:
+  # pod 'Firebase/Analytics'
+end
+
+post_install do |installer|
+  installer.pods_project.targets.each do |target|
+    if defined?(flutter_additional_ios_build_settings)
+      flutter_additional_ios_build_settings(target)
+    end
+    
+    target.build_configurations.each do |config|
+      # Align iOS deployment targets for all library pods to avoid version mismatch errors
+      config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '13.0'
+    end
+  end
+end

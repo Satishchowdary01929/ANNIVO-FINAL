@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 // ============================================================================
 //               ANNIVO FOOD & LOYALTY CLUB - FLUTTER VERSION
@@ -27,7 +28,13 @@ const Color EmeraldGreen = Color(0xFF2E7D32);
 const Color EmeraldBg = Color(0xFFE8F5E9);
 const Color CreamGrey = Color(0xFFF4F6F9);
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  try {
+    await Firebase.initializeApp();
+  } catch (e) {
+    debugPrint("Firebase initialization skipped or simulated: $e");
+  }
   runApp(const AnnivoApp());
 }
 
