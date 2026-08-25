@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ANNIVO - Zero Commission Food Delivery & Loyalty Club | Official App</title>
+  <meta name="description" content="ANNIVO is India's revolutionary zero-commission food ordering & loyalty club platform. Pay authentic dine-in menu prices, save 30-40% on every meal, and earn gamified loyalty rewards." />
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  
+  <!-- Custom Styles -->
+  <link rel="stylesheet" href="styles.css" />
+  
+  <!-- Canvas Confetti -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+</head>
+<body>
+
+  <!-- =========================================================================
+       NAVIGATION BAR
+  ========================================================================== -->
+  <header class="navbar">
+    <div class="nav-container">
+      <a href="#hero" class="brand-logo">
+        <div class="logo-badge">
+          <i class="fa-solid fa-utensils"></i>
+        </div>
+        <div class="brand-titles">
+          <span class="brand-title">ANNIVO</span>
+          <span class="brand-subtitle">Zero Commission Food</span>
+        </div>
+      </a>
+
+      <nav class="nav-links">
+        <a href="#what-is-annivo" class="nav-link">What is ANNIVO?</a>
+        <a href="#how-it-works" class="nav-link">How It Works</a>
+        <a href="#calculator" class="nav-link">Savings Calculator</a>
+        <a href="#comparison" class="nav-link">Why We're Better</a>
+        <a href="#rewards" class="nav-link">Loyalty Club</a>
+        <a href="#faq" class="nav-link">FAQ</a>
+      </nav>
+
+      <div class="nav-cta-group">
+        <a href="#download" class="btn btn-primary btn-sm">
+          <i class="fa-solid fa-download"></i> Get the App
+        </a>
+      </div>
+
+      <button class="mobile-menu-toggle" id="mobileMenuBtn" aria-label="Toggle menu">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+    </div>
+
+    <!-- Mobile Drawer Navigation -->
+    <div class="mobile-drawer" id="mobileDrawer">
+      <a href="#what-is-annivo" onclick="closeDrawer()">What is ANNIVO?</a>
+      <a href="#how-it-works" onclick="closeDrawer()">How It Works</a>
+      <a href="#calculator" onclick="closeDrawer()">Savings Calculator</a>
+      <a href="#comparison" onclick="closeDrawer()">Why We're Better</a>
+      <a href="#rewards" onclick="closeDrawer()">Loyalty Club</a>
+      <a href="#faq" onclick="closeDrawer()">FAQ</a>
+      <a href="#download" class="btn btn-primary" onclick="closeDrawer()"><i class="fa-solid fa-download"></i> Download App</a>
+    </div>
+  </header>
+
+  <!-- =========================================================================
+       HERO SECTION
+  ========================================================================== -->
+  <section class="hero-section" id="hero">
+    <div class="hero-bg-glow glow-1"></div>
+    <div class="hero-bg-glow glow-2"></div>
+
+    <div class="container hero-container">
+      <div class="hero-content">
+        <div class="badge hero-pill">
+          <i class="fa-solid fa-shield-halved"></i> 100% Zero-Commission Food Movement
+        </div>
+        
+        <h1 class="hero-title">
+          Authentic Restaurant Prices.<br/>
+          <span class="gradient-text">Zero Inflated Markups.</span>
+        </h1>
+        
+        <p class="hero-description">
+          <strong>ANNIVO</strong> is the revolutionary food delivery and loyalty club app built to eliminate predatory 30–40% aggregator commissions. Restaurants earn more, riders get paid fairly, and you enjoy delicious meals at true dine-in prices.
+        </p>
+
+        <!-- Store Download Badges -->
+        <div class="download-badges-group" id="download">
+          <a href="https://play.google.com/store/apps" target="_blank" rel="noopener noreferrer" class="store-badge google-play-btn">
+            <i class="fa-brands fa-google-play store-icon"></i>
+            <div class="store-btn-text">
+              <span class="btn-subtext">GET IT ON</span>
+              <span class="btn-maintext">Google Play</span>
+            </div>
+          </a>
+
+          <a href="https://www.apple.com/app-store/" target="_blank" rel="noopener noreferrer" class="store-badge app-store-btn">
+            <i class="fa-brands fa-apple store-icon"></i>
+            <div class="store-btn-text">
+              <span class="btn-subtext">Download on the</span>
+              <span class="btn-maintext">App Store</span>
+            </div>
+          </a>
+
+          <a href="#qr-modal" class="store-badge qr-trigger-btn" onclick="openQrModal()">
+            <i class="fa-solid fa-qrcode store-icon"></i>
+            <div class="store-btn-text">
+              <span class="btn-subtext">Scan with Phone</span>
+              <span class="btn-maintext">Instant QR</span>
+            </div>
+          </a>
+        </div>
+
+        <!-- Trust Stats -->
+        <div class="hero-stats-row">
+          <div class="stat-item">
+            <span class="stat-num">₹0</span>
+            <span class="stat-lbl">Commission Charged</span>
+          </div>
+          <div class="stat-divider"></div>
+          <div class="stat-item">
+            <span class="stat-num">35%+</span>
+            <span class="stat-lbl">Average User Savings</span>
+          </div>
+          <div class="stat-divider"></div>
+          <div class="stat-item">
+            <span class="stat-num">100%</span>
+            <span class="stat-lbl">Direct Restaurant Pay</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Hero Visual Phone Mockup -->
+      <div class="hero-mockup-wrapper">
+        <div class="phone-frame">
+          <div class="phone-speaker"></div>
+          <div class="phone-notch"></div>
+          
+          <div class="phone-screen">
+            <div class="mockup-header">
+              <div class="mockup-brand">
+                <i class="fa-solid fa-utensils"></i> ANNIVO
+              </div>
+              <div class="mockup-pill">
+                <i class="fa-solid fa-coins"></i> 2,450 Pts
+              </div>
+            </div>
+
+            <div class="mockup-card highlight-card">
+              <div class="mockup-card-title"><i class="fa-solid fa-fire"></i> 0% Markup Guarantee</div>
+              <div class="mockup-price-compare">
+                <div class="compare-box old">
+                  <span>Other Apps</span>
+                  <s>₹450</s>
+                </div>
+                <div class="compare-arrow"><i class="fa-solid fa-arrow-right"></i></div>
+                <div class="compare-box new">
+                  <span>ANNIVO</span>
+                  <strong>₹310</strong>
+                </div>
+              </div>
+              <div class="mockup-save-badge">You save ₹140 on this dish!</div>
+            </div>
+
+            <div class="mockup-restaurant-list">
+              <div class="mock-item">
+                <div class="mock-item-img veg">🌱</div>
+                <div class="mock-item-info">
+                  <div class="mock-item-name">Royal Biryani Kitchen</div>
+                  <div class="mock-item-meta">⭐ 4.8 • 25 mins • Authentic Menu</div>
+                </div>
+                <div class="mock-item-tag">0% Fee</div>
+              </div>
+
+              <div class="mock-item">
+                <div class="mock-item-img nonveg">🍗</div>
+                <div class="mock-item-info">
+                  <div class="mock-item-name">Urban Tandoor & Grill</div>
+                  <div class="mock-item-meta">⭐ 4.9 • 30 mins • Pure Dine-in Price</div>
+                </div>
+                <div class="mock-item-tag">0% Fee</div>
+              </div>
+            </div>
+
+            <div class="mockup-bottom-action">
+              <div class="mockup-wheel-preview">
+                <i class="fa-solid fa-gift"></i> Daily Scratch Card Waiting!
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Floating Badges -->
+        <div class="floating-badge badge-top-left">
+          <i class="fa-solid fa-bolt text-gold"></i>
+          <div>
+            <strong>Lightning Fast</strong>
+            <span>Direct Kitchen Routing</span>
+          </div>
+        </div>
+
+        <div class="floating-badge badge-bottom-right">
+          <i class="fa-solid fa-award text-emerald"></i>
+          <div>
+            <strong>Club Rewards</strong>
+            <span>Earn coins on every rupee</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       WHAT IS ANNIVO & CORE PILLARS
+  ========================================================================== -->
+  <section class="section-padded bg-light" id="what-is-annivo">
+    <div class="container">
+      <div class="section-header text-center">
+        <span class="section-eyebrow">The ANNIVO Mission</span>
+        <h2 class="section-title">What is ANNIVO and Why Does It Exist?</h2>
+        <p class="section-subtitle">
+          Traditional food delivery apps charge restaurants up to <strong>35% commission</strong>, forcing them to inflate menu prices for delivery. ANNIVO changes the game with a fair, ethical, transparent model.
+        </p>
+      </div>
+
+      <div class="grid grid-3 feature-grid">
+        <!-- Pillar 1 -->
+        <div class="feature-card">
+          <div class="feature-icon bg-emerald-light text-emerald">
+            <i class="fa-solid fa-tag"></i>
+          </div>
+          <h3>Authentic Dine-In Pricing</h3>
+          <p>
+            No inflated digital menus. Dishes on ANNIVO are priced exactly what you would pay if you walked into the restaurant in person.
+          </p>
+          <ul class="feature-checklist">
+            <li><i class="fa-solid fa-check text-emerald"></i> No 30-40% hidden aggregator markup</li>
+            <li><i class="fa-solid fa-check text-emerald"></i> Item prices directly verified with kitchens</li>
+            <li><i class="fa-solid fa-check text-emerald"></i> Transparent 5% GST and packaging only</li>
+          </ul>
+        </div>
+
+        <!-- Pillar 2 -->
+        <div class="feature-card highlighted-card">
+          <div class="feature-icon bg-primary-light text-primary">
+            <i class="fa-solid fa-handshake-angle"></i>
+          </div>
+          <div class="card-badge">Fair Economy</div>
+          <h3>100% To Restaurant Partners</h3>
+          <p>
+            We don't take a bite out of restaurant earnings. Chefs and small culinary businesses keep their full margin to invest in quality and taste.
+          </p>
+          <ul class="feature-checklist">
+            <li><i class="fa-solid fa-check text-primary"></i> 0% Commission on all order volume</li>
+            <li><i class="fa-solid fa-check text-primary"></i> Direct kitchen support & local businesses</li>
+            <li><i class="fa-solid fa-check text-primary"></i> 100% rider tip pass-through with zero cuts</li>
+          </ul>
+        </div>
+
+        <!-- Pillar 3 -->
+        <div class="feature-card">
+          <div class="feature-icon bg-accent-light text-accent">
+            <i class="fa-solid fa-crown"></i>
+          </div>
+          <h3>Gamified Loyalty Club</h3>
+          <p>
+            Turn every bite into tangible savings. Earn ANNIVO coins with every order, spin the daily lucky prize wheel, and scratch cards for free meals.
+          </p>
+          <ul class="feature-checklist">
+            <li><i class="fa-solid fa-check text-accent"></i> Tier multipliers (Silver, Gold, Platinum)</li>
+            <li><i class="fa-solid fa-check text-accent"></i> Daily spin wheel & scratch-to-win cards</li>
+            <li><i class="fa-solid fa-check text-accent"></i> Direct cash vouchers on future orders</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       HOW IT WORKS SECTION
+  ========================================================================== -->
+  <section class="section-padded" id="how-it-works">
+    <div class="container">
+      <div class="section-header text-center">
+        <span class="section-eyebrow">Seamless Experience</span>
+        <h2 class="section-title">How ANNIVO Works in 4 Steps</h2>
+        <p class="section-subtitle">
+          Enjoying restaurant-grade food without unfair markups takes less than 60 seconds on the ANNIVO app.
+        </p>
+      </div>
+
+      <div class="steps-container">
+        <!-- Step 1 -->
+        <div class="step-card">
+          <div class="step-number">1</div>
+          <div class="step-icon-wrap">
+            <i class="fa-solid fa-mobile-screen-button"></i>
+          </div>
+          <h4>Download & Discover</h4>
+          <p>Install the ANNIVO app on Android or iOS and browse verified 0%-commission local kitchens near you.</p>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="step-card">
+          <div class="step-number">2</div>
+          <div class="step-icon-wrap">
+            <i class="fa-solid fa-bowl-food"></i>
+          </div>
+          <h4>Order at True Prices</h4>
+          <p>Add your favorite dishes to the cart at honest dine-in menu prices without inflated aggregator margins.</p>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="step-card">
+          <div class="step-number">3</div>
+          <div class="step-icon-wrap">
+            <i class="fa-solid fa-map-location-dot"></i>
+          </div>
+          <h4>Live GPS Tracking</h4>
+          <p>Track your food along live GPS road routes directly from the kitchen stove to your doorstep in real time.</p>
+        </div>
+
+        <!-- Step 4 -->
+        <div class="step-card">
+          <div class="step-number">4</div>
+          <div class="step-icon-wrap">
+            <i class="fa-solid fa-gift"></i>
+          </div>
+          <h4>Earn & Unlock Rewards</h4>
+          <p>Collect reward coins, spin the daily prize wheel, and unlock tier perks on the ANNIVO Loyalty Club.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       INTERACTIVE SAVINGS CALCULATOR
+  ========================================================================== -->
+  <section class="section-padded bg-navy text-white" id="calculator">
+    <div class="container">
+      <div class="calculator-wrapper">
+        <div class="calc-info">
+          <span class="pill-gold"><i class="fa-solid fa-calculator"></i> Real-Time Calculator</span>
+          <h2>Calculate How Much You Save With ANNIVO</h2>
+          <p>
+            Traditional aggregators charge up to 35% commission, and mark up individual dish prices on delivery. Slide below to see your estimated monthly and yearly savings with ANNIVO!
+          </p>
+
+          <div class="calc-sliders">
+            <div class="slider-group">
+              <div class="slider-label-row">
+                <span>Orders per week:</span>
+                <strong id="ordersCountVal">4 orders</strong>
+              </div>
+              <input type="range" id="ordersCountSlider" min="1" max="14" value="4" class="custom-range" />
+            </div>
+
+            <div class="slider-group">
+              <div class="slider-label-row">
+                <span>Average order spend:</span>
+                <strong id="avgSpendVal">₹500</strong>
+              </div>
+              <input type="range" id="avgSpendSlider" min="150" max="2500" step="50" value="500" class="custom-range" />
+            </div>
+          </div>
+        </div>
+
+        <div class="calc-results-card">
+          <div class="calc-header">
+            <h3>Your Savings Breakdown</h3>
+            <span class="calc-tag">Zero Commission Effect</span>
+          </div>
+
+          <div class="savings-amount-box">
+            <span class="savings-label">Monthly Savings</span>
+            <div class="savings-figure" id="monthlySavingsDisplay">₹2,800</div>
+            <span class="savings-subtext">Direct back into your pocket</span>
+          </div>
+
+          <div class="results-grid">
+            <div class="result-tile">
+              <span class="tile-title">Yearly Savings</span>
+              <strong class="tile-val text-gold" id="yearlySavingsDisplay">₹33,600</strong>
+            </div>
+            <div class="result-tile">
+              <span class="tile-title">Loyalty Coins Earned</span>
+              <strong class="tile-val text-emerald" id="coinsEarnedDisplay">9,600 Pts</strong>
+            </div>
+          </div>
+
+          <a href="#download" class="btn btn-gold btn-block">
+            <i class="fa-solid fa-arrow-down"></i> Start Saving Today
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       SIDE-BY-SIDE COMPARISON TABLE
+  ========================================================================== -->
+  <section class="section-padded" id="comparison">
+    <div class="container">
+      <div class="section-header text-center">
+        <span class="section-eyebrow">Transparent Truth</span>
+        <h2 class="section-title">ANNIVO vs Traditional Delivery Apps</h2>
+        <p class="section-subtitle">
+          See the direct difference between ANNIVO's zero-commission ecosystem and traditional high-fee food platforms.
+        </p>
+      </div>
+
+      <div class="table-responsive">
+        <table class="comparison-table">
+          <thead>
+            <tr>
+              <th class="col-feature">Feature / Policy</th>
+              <th class="col-other">Other Aggregators</th>
+              <th class="col-annivo">ANNIVO App <span class="header-badge">Winner</span></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Restaurant Commission</strong></td>
+              <td><span class="badge-red"><i class="fa-solid fa-xmark"></i> 25% – 35%</span></td>
+              <td><span class="badge-green"><i class="fa-solid fa-check"></i> 0% Pure Zero</span></td>
+            </tr>
+            <tr>
+              <td><strong>Menu Price Inflation</strong></td>
+              <td><span class="badge-red"><i class="fa-solid fa-xmark"></i> 20% – 40% Higher</span></td>
+              <td><span class="badge-green"><i class="fa-solid fa-check"></i> 100% Genuine Dine-in Price</span></td>
+            </tr>
+            <tr>
+              <td><strong>Delivery Partner Tips</strong></td>
+              <td><span>May deduct overhead fees</span></td>
+              <td><span class="badge-green"><i class="fa-solid fa-check"></i> 100% direct to rider</span></td>
+            </tr>
+            <tr>
+              <td><strong>Gamified Loyalty Club</strong></td>
+              <td><span>Limited & expiring coupons</span></td>
+              <td><span class="badge-green"><i class="fa-solid fa-check"></i> Daily Wheel, Scratchers & Coin Vault</span></td>
+            </tr>
+            <tr>
+              <td><strong>Direct Restaurant Support</strong></td>
+              <td><span>Extractive margins</span></td>
+              <td><span class="badge-green"><i class="fa-solid fa-check"></i> Kitchens keep all profits</span></td>
+            </tr>
+            <tr>
+              <td><strong>Customer AI Support</strong></td>
+              <td><span>Slow bot queues</span></td>
+              <td><span class="badge-green"><i class="fa-solid fa-check"></i> 24/7 Instant AI & Ticket Tracking</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       LOYALTY CLUB & GAMIFIED REWARDS SECTION
+  ========================================================================== -->
+  <section class="section-padded bg-light" id="rewards">
+    <div class="container">
+      <div class="section-header text-center">
+        <span class="section-eyebrow">Play & Earn</span>
+        <h2 class="section-title">The ANNIVO Loyalty Club Experience</h2>
+        <p class="section-subtitle">
+          We reward you on every single rupee spent. Turn every meal into exciting prizes!
+        </p>
+      </div>
+
+      <div class="grid grid-3">
+        <!-- Loyalty Card 1 -->
+        <div class="reward-feature-card">
+          <div class="reward-icon-circle bg-gold-subtle">
+            <i class="fa-solid fa-dharmachakra text-gold"></i>
+          </div>
+          <h4>Daily Lucky Prize Wheel</h4>
+          <p>Log into the app every day to spin the physics-based fortune wheel and win up to 250 bonus coins instantly.</p>
+        </div>
+
+        <!-- Loyalty Card 2 -->
+        <div class="reward-feature-card">
+          <div class="reward-icon-circle bg-emerald-subtle">
+            <i class="fa-solid fa-wand-magic-sparkles text-emerald"></i>
+          </div>
+          <h4>Scratch & Win Cards</h4>
+          <p>Complete orders to unlock digital foil scratch cards revealing secret cashback discounts and free dish treats.</p>
+        </div>
+
+        <!-- Loyalty Card 3 -->
+        <div class="reward-feature-card">
+          <div class="reward-icon-circle bg-navy-subtle">
+            <i class="fa-solid fa-layer-group text-navy"></i>
+          </div>
+          <h4>Tier Multipliers</h4>
+          <p>Advance from Silver to Gold and Platinum tiers to multiply your coin earning rates up to 2x on every order.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       DOWNLOAD APP CALL TO ACTION (PLAY STORE & APP STORE)
+  ========================================================================== -->
+  <section class="download-cta-section" id="download-section">
+    <div class="container">
+      <div class="download-cta-card">
+        <div class="cta-content">
+          <span class="cta-pill"><i class="fa-solid fa-bolt"></i> Ready to Taste the Difference?</span>
+          <h2 class="cta-title">Get ANNIVO on Your Phone Today</h2>
+          <p class="cta-text">
+            Join thousands of smart foodies saving money every day while supporting local restaurants. Download now on Google Play Store or Apple App Store.
+          </p>
+
+          <!-- Store Buttons in CTA -->
+          <div class="cta-badges-row">
+            <a href="https://play.google.com/store/apps" target="_blank" rel="noopener noreferrer" class="store-badge store-badge-light">
+              <i class="fa-brands fa-google-play store-icon"></i>
+              <div class="store-btn-text">
+                <span class="btn-subtext">GET IT ON</span>
+                <span class="btn-maintext">Google Play</span>
+              </div>
+            </a>
+
+            <a href="https://www.apple.com/app-store/" target="_blank" rel="noopener noreferrer" class="store-badge store-badge-light">
+              <i class="fa-brands fa-apple store-icon"></i>
+              <div class="store-btn-text">
+                <span class="btn-subtext">Download on the</span>
+                <span class="btn-maintext">App Store</span>
+              </div>
+            </a>
+          </div>
+
+          <div class="cta-perks">
+            <span><i class="fa-solid fa-circle-check text-gold"></i> Free to Download</span>
+            <span><i class="fa-solid fa-circle-check text-gold"></i> Instant Welcome Coins</span>
+            <span><i class="fa-solid fa-circle-check text-gold"></i> No Hidden Fees</span>
+          </div>
+        </div>
+
+        <!-- Phone Visual in CTA -->
+        <div class="cta-qr-box">
+          <div class="qr-frame">
+            <div class="qr-canvas-sim">
+              <!-- SVG QR Code Icon Simulation -->
+              <svg viewBox="0 0 100 100" class="qr-svg" fill="currentColor">
+                <path d="M10 10h30v30h-30zM15 15v20h20v-20zM20 20h10v10h-10zM60 10h30v30h-30zM65 15v20h20v-20zM70 20h10v10h-10zM10 60h30v30h-30zM15 65v20h20v-20zM20 70h10v10h-10zM50 10h5v15h-5zM50 30h10v5h-10zM45 45h10v10h-10zM60 50h15v5h-15zM80 50h10v10h-10zM50 65h10v25h-10zM65 70h10v10h-10zM80 75h10v15h-10z" />
+              </svg>
+            </div>
+            <p class="qr-label">Scan to Install ANNIVO App</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       FREQUENTLY ASKED QUESTIONS (FAQ)
+  ========================================================================== -->
+  <section class="section-padded" id="faq">
+    <div class="container">
+      <div class="section-header text-center">
+        <span class="section-eyebrow">Got Questions?</span>
+        <h2 class="section-title">Frequently Asked Questions</h2>
+        <p class="section-subtitle">Everything you need to know about ANNIVO and zero-commission food ordering.</p>
+      </div>
+
+      <div class="faq-accordion">
+        <!-- FAQ 1 -->
+        <div class="faq-item active">
+          <button class="faq-question" onclick="toggleFaq(this)">
+            <span>How does ANNIVO offer 0% commission food delivery?</span>
+            <i class="fa-solid fa-chevron-down faq-arrow"></i>
+          </button>
+          <div class="faq-answer">
+            <p>
+              ANNIVO operates on a direct, streamlined technology model that eliminates excessive middleman markups. Restaurants list their authentic dine-in menu prices without having to mark them up by 30-40% to cover aggregator commissions.
+            </p>
+          </div>
+        </div>
+
+        <!-- FAQ 2 -->
+        <div class="faq-item">
+          <button class="faq-question" onclick="toggleFaq(this)">
+            <span>Where can I download the ANNIVO mobile app?</span>
+            <i class="fa-solid fa-chevron-down faq-arrow"></i>
+          </button>
+          <div class="faq-answer">
+            <p>
+              The ANNIVO app is available for download on both the <strong>Google Play Store</strong> (for Android smartphones) and the <strong>Apple App Store</strong> (for iPhone & iPad devices). You can use the download buttons on this website or scan our QR code.
+            </p>
+          </div>
+        </div>
+
+        <!-- FAQ 3 -->
+        <div class="faq-item">
+          <button class="faq-question" onclick="toggleFaq(this)">
+            <span>How do ANNIVO Loyalty Points work?</span>
+            <i class="fa-solid fa-chevron-down faq-arrow"></i>
+          </button>
+          <div class="faq-answer">
+            <p>
+              Every time you order on ANNIVO, you automatically earn 1 Coin for every ₹10 spent. You can also earn daily bonuses through the Lucky Prize Wheel and Scratch & Win cards. These coins can be converted into instant ₹50, ₹100, or flat discount vouchers in your cart!
+            </p>
+          </div>
+        </div>
+
+        <!-- FAQ 4 -->
+        <div class="faq-item">
+          <button class="faq-question" onclick="toggleFaq(this)">
+            <span>How are delivery partners paid on ANNIVO?</span>
+            <i class="fa-solid fa-chevron-down faq-arrow"></i>
+          </button>
+          <div class="faq-answer">
+            <p>
+              Our delivery partners receive 100% of their delivery fees and 100% of customer tips directly without any platform commission cuts or hidden deductions.
+            </p>
+          </div>
+        </div>
+
+        <!-- FAQ 5 -->
+        <div class="faq-item">
+          <button class="faq-question" onclick="toggleFaq(this)">
+            <span>Is food quality and hygiene guaranteed?</span>
+            <i class="fa-solid fa-chevron-down faq-arrow"></i>
+          </button>
+          <div class="faq-answer">
+            <p>
+              Yes! All partner kitchens on ANNIVO undergo strict FSSAI hygiene verification. Because restaurants retain 100% of their earnings, they never have to cut ingredient quality or portion sizes.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       FOOTER
+  ========================================================================== -->
+  <footer class="footer">
+    <div class="container footer-container">
+      <div class="footer-brand">
+        <div class="brand-logo footer-logo">
+          <div class="logo-badge">
+            <i class="fa-solid fa-utensils"></i>
+          </div>
+          <div class="brand-titles">
+            <span class="brand-title">ANNIVO</span>
+            <span class="brand-subtitle">Zero Commission Food</span>
+          </div>
+        </div>
+        <p class="footer-bio">
+          Empowering diners, restaurants, and delivery heroes with honest, zero-commission food logistics and rewarding loyalty experiences.
+        </p>
+        <div class="footer-socials">
+          <a href="#" aria-label="Twitter"><i class="fa-brands fa-x-twitter"></i></a>
+          <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+          <a href="#" aria-label="LinkedIn"><i class="fa-brands fa-linkedin"></i></a>
+          <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook"></i></a>
+        </div>
+      </div>
+
+      <div class="footer-links-group">
+        <h5>Quick Links</h5>
+        <ul>
+          <li><a href="#what-is-annivo">What is ANNIVO?</a></li>
+          <li><a href="#how-it-works">How It Works</a></li>
+          <li><a href="#calculator">Savings Calculator</a></li>
+          <li><a href="#comparison">ANNIVO vs Others</a></li>
+          <li><a href="#rewards">Loyalty Club</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-links-group">
+        <h5>Get the App</h5>
+        <ul>
+          <li><a href="https://play.google.com/store/apps" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-google-play"></i> Google Play Store</a></li>
+          <li><a href="https://www.apple.com/app-store/" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-apple"></i> Apple App Store</a></li>
+          <li><a href="#faq">Frequently Asked Questions</a></li>
+          <li><a href="mailto:support@annivo.club"><i class="fa-solid fa-envelope"></i> Partner Support</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div class="container footer-bottom-inner">
+        <span>© 2026 ANNIVO Technologies Pvt Ltd. All rights reserved. Zero Commission Certified.</span>
+        <div class="footer-legal">
+          <a href="#">Privacy Policy</a> • <a href="#">Terms of Service</a> • <a href="#">Refund Policy</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- =========================================================================
+       MODAL: QR CODE SCANNER POPUP
+  ========================================================================== -->
+  <div id="qrModal" class="modal-overlay hidden" onclick="closeQrModal(event)">
+    <div class="modal-card" onclick="event.stopPropagation()">
+      <div class="modal-header">
+        <h3><i class="fa-solid fa-mobile-screen"></i> Scan to Download ANNIVO</h3>
+        <button class="modal-close-btn" onclick="closeQrModal()"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="modal-body text-center">
+        <p class="modal-desc">Point your phone's camera at the QR code to instantly install the ANNIVO app on Android or iOS:</p>
+        
+        <div class="modal-qr-container">
+          <svg viewBox="0 0 100 100" class="qr-svg large" fill="currentColor">
+            <path d="M10 10h30v30h-30zM15 15v20h20v-20zM20 20h10v10h-10zM60 10h30v30h-30zM65 15v20h20v-20zM70 20h10v10h-10zM10 60h30v30h-30zM15 65v20h20v-20zM20 70h10v10h-10zM50 10h5v15h-5zM50 30h10v5h-10zM45 45h10v10h-10zM60 50h15v5h-15zM80 50h10v10h-10zM50 65h10v25h-10zM65 70h10v10h-10zM80 75h10v15h-10z" />
+          </svg>
+        </div>
+
+        <div class="modal-store-buttons">
+          <a href="https://play.google.com/store/apps" target="_blank" rel="noopener noreferrer" class="btn btn-outline"><i class="fa-brands fa-google-play"></i> Play Store</a>
+          <a href="https://www.apple.com/app-store/" target="_blank" rel="noopener noreferrer" class="btn btn-outline"><i class="fa-brands fa-apple"></i> App Store</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
