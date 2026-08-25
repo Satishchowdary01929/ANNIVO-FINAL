@@ -4,10 +4,69 @@
  */
 
 document.addEventListener('DOMContentLoaded', () => {
+  initScrollAnimations();
   initCalculator();
   initMobileDrawer();
   initConfettiOnBadges();
 });
+
+/* ==========================================================================
+   SCROLL ENTRANCE ANIMATIONS (INTERSECTION OBSERVER)
+   ========================================================================== */
+function initScrollAnimations() {
+  const animatedElements = document.querySelectorAll(
+    '.reveal, .reveal-fade, .reveal-slide-up, .reveal-left, .reveal-right, .reveal-scale, ' +
+    '.feature-card, .step-card, .reward-feature-card, .faq-item, .section-header, ' +
+    '.comparison-table, .calc-info, .calc-results-card, .download-cta-card'
+  );
+
+  if (!('IntersectionObserver' in window)) {
+    // Fallback if IntersectionObserver is not supported
+    animatedElements.forEach(el => el.classList.add('active'));
+    return;
+  }
+
+  // Auto-add stagger classes for grid containers if not already present
+  document.querySelectorAll('.grid-3, .steps-container, .faq-accordion').forEach(container => {
+    Array.from(container.children).forEach((child, index) => {
+      if (!child.classList.contains('reveal') && !child.classList.contains('reveal-slide-up')) {
+        child.classList.add('reveal-slide-up');
+      }
+      const staggerClass = `stagger-${Math.min(index + 1, 5)}`;
+      if (!child.className.includes('stagger-')) {
+        child.classList.add(staggerClass);
+      }
+    });
+  });
+
+  const observerOptions = {
+    root: null,
+    rootMargin: '0px 0px -50px 0px',
+    threshold: 0.12
+  };
+
+  const observer = new IntersectionObserver((entries, obs) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('active');
+        // Once animated, stop observing this element for smooth performance
+        obs.unobserve(entry.target);
+      }
+    });
+  }, observerOptions);
+
+  animatedElements.forEach(el => {
+    if (!el.classList.contains('reveal') &&
+        !el.classList.contains('reveal-fade') &&
+        !el.classList.contains('reveal-slide-up') &&
+        !el.classList.contains('reveal-left') &&
+        !el.classList.contains('reveal-right') &&
+        !el.classList.contains('reveal-scale')) {
+      el.classList.add('reveal-slide-up');
+    }
+    observer.observe(el);
+  });
+}
 
 /* ==========================================================================
    SAVINGS CALCULATOR

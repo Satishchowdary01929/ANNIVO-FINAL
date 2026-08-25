@@ -1,28 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
-    android:width="64dp"
-    android:height="64dp"
-    android:viewportWidth="100"
-    android:viewportHeight="100">
-    
-    <!-- Stylized 'A' shape in Annivo Orange -->
-    <path
-        android:fillColor="#FFFF6D00"
-        android:pathData="M50,15 C56,15 61,21 65,28 L82,68 C85,74 82,81 74,81 C70,81 67,77 65,74 L60,60 L40,60 L35,74 C33,77 30,81 26,81 C18,81 15,74 18,68 L35,28 C39,21 44,15 50,15 Z" />
+    android:width="200dp"
+    android:height="200dp"
+    android:viewportWidth="200"
+    android:viewportHeight="200">
 
-    <!-- Spoon silhouette carved inside the crossbar in clean white -->
+    <!-- 3 Dynamic Speed Lines on Left side -->
+    <path
+        android:fillColor="#FFFF6A00"
+        android:pathData="M25,68 h22 c1.9,0 3.5,1.6 3.5,3.5 c0,1.9 -1.6,3.5 -3.5,3.5 H25 c-1.9,0 -3.5,-1.6 -3.5,-3.5 c0,-1.9 1.6,-3.5 3.5,-3.5 z" />
+    <path
+        android:fillColor="#FFFF6A00"
+        android:pathData="M15,85 h32 c1.9,0 3.5,1.6 3.5,3.5 c0,1.9 -1.6,3.5 -3.5,3.5 H15 c-1.9,0 -3.5,-1.6 -3.5,-3.5 c0,-1.9 1.6,-3.5 3.5,-3.5 z" />
+    <path
+        android:fillColor="#FFFF6A00"
+        android:pathData="M7,102 h30 c1.9,0 3.5,1.6 3.5,3.5 c0,1.9 -1.6,3.5 -3.5,3.5 H7 c-1.9,0 -3.5,-1.6 -3.5,-3.5 c0,-1.9 1.6,-3.5 3.5,-3.5 z" />
+
+    <!-- Main 'A' Body in Vivid Orange -->
+    <path
+        android:fillColor="#FFFF6A00"
+        android:pathData="M104,12 C111,12 119,18 125,28 L168,116 C176,132 170,145 154,145 C144,145 138,138 133,128 L122,104 L74,104 L56,135 C50,143 42,145 34,145 C18,145 13,131 21,116 L82,28 C89,18 97,12 104,12 Z" />
+
+    <!-- Sleek Spoon Cutout in Crossbar (Clean White) -->
+    <!-- Spoon Bowl -->
     <path
         android:fillColor="#FFFFFF"
-        android:pathData="M50,32 C54,32 57,36 54,41 L49,51 C48,53 45,55 42,55 C39,55 37,52 39,49 L42,45 C43,43 46,32 50,32 Z" />
-
-    <!-- 3 Speed lines on the left side, representing rapid food delivery -->
+        android:pathData="M112,70 C118,70 126,80 121,93 C116,104 106,112 98,112 C91,112 88,105 92,97 C97,86 105,70 112,70 Z" />
+    <!-- Spoon Handle -->
     <path
-        android:fillColor="#FFFF6D00"
-        android:pathData="M12,37 h14 c1.5,0 2.5,1 2.5,2.5 c0,1.5 -1,2.5 -2.5,2.5 H12 c-1.5,0 -2.5,-1 -2.5,-2.5 c0,-1.5 1,-2.5 2.5,-2.5 z" />
-    <path
-        android:fillColor="#FFFF6D00"
-        android:pathData="M7,47 h19 c1.5,0 2.5,1 2.5,2.5 c0,1.5 -1,2.5 -2.5,2.5 H7 c-1.5,0 -2.5,-1 -2.5,-2.5 c0,-1.5 1,-2.5 2.5,-2.5 z" />
-    <path
-        android:fillColor="#FFFF6D00"
-        android:pathData="M15,57 h11 c1.5,0 2.5,1 2.5,2.5 c0,1.5 -1,2.5 -2.5,2.5 H15 c-1.5,0 -2.5,-1 -2.5,-2.5 c0,-1.5 1,-2.5 2.5,-2.5 z" />
+        android:fillColor="#FFFFFF"
+        android:pathData="M99,107 L75,139 C71,144 64,147 57,144 C52,141 54,134 57,129 L86,97 Z" />
 </vector>

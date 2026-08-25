@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" width="100%" height="100%">
+  <defs>
+    <linearGradient id="annivoOrangeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FF7A00" />
+      <stop offset="100%" stop-color="#FF5400" />
+    </linearGradient>
+  </defs>
+
+  <!-- Group: Emblem Icon -->
+  <g transform="translate(0, 0)">
+    <!-- 3 Dynamic Speed Lines on Left -->
+    <rect x="170" y="172" width="30" height="9" rx="4.5" fill="#FF6A00" />
+    <rect x="155" y="193" width="45" height="9" rx="4.5" fill="#FF6A00" />
+    <rect x="144" y="213" width="42" height="9" rx="4.5" fill="#FF6A00" />
+
+    <!-- Main Stylized 'A' Body in Vibrant Orange Gradient -->
+    <path d="M255 90 C264 90 274 97 282 110 L335 220 C345 240 338 256 318 256 C306 256 298 248 292 236 L278 206 L218 206 L195 244 C188 254 178 256 168 256 C148 256 142 238 152 220 L228 110 C236 97 246 90 255 90 Z" fill="url(#annivoOrangeGrad)" />
+
+    <!-- Sleek Spoon Cutout in Crossbar -->
+    <!-- Spoon Bowl -->
+    <path d="M266 162 C273 162 284 174 278 190 C272 204 259 214 249 214 C241 214 237 205 242 195 C248 181 258 162 266 162 Z" fill="#FFFFFF" />
+    <!-- Spoon Handle -->
+    <path d="M250 208 L220 248 C215 254 206 258 198 254 C192 250 194 242 198 236 L234 196 Z" fill="#FFFFFF" />
+  </g>
+
+  <!-- Wordmark: Annivo -->
+  <g transform="translate(250, 345)" text-anchor="middle" font-family="'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif" font-weight="900">
+    <text font-size="78" letter-spacing="-1">
+      <tspan fill="#0D1B2A">Anni</tspan><tspan fill="#FF5B00">v</tspan><tspan fill="#0D1B2A">o</tspan>
+    </text>
+  </g>
+
+  <!-- Tagline 1: — Good Food. Fair Platform. — -->
+  <g transform="translate(250, 395)" text-anchor="middle" font-family="'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif">
+    <!-- Left Orange Dash -->
+    <line x1="85" y1="391" x2="115" y2="391" stroke="#FF6A00" stroke-width="3.5" stroke-linecap="round" />
+    <!-- Center Text -->
+    <text x="250" y="396" font-size="19" font-weight="700" fill="#0D1B2A" letter-spacing="1">Good Food. Fair Platform.</text>
+    <!-- Right Orange Dash -->
+    <line x1="385" y1="391" x2="415" y2="391" stroke="#FF6A00" stroke-width="3.5" stroke-linecap="round" />
+  </g>
+
+  <!-- Tagline 2: ZERO COMMISSION. ONE COMMUNITY. -->
+  <g transform="translate(250, 425)" text-anchor="middle" font-family="'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif">
+    <text font-size="13" font-weight="800" fill="#FF5400" letter-spacing="3.5">ZERO COMMISSION. ONE COMMUNITY.</text>
+  </g>
+</svg>

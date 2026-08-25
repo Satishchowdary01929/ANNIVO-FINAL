@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="100%" height="100%">
+  <defs>
+    <linearGradient id="iconOrangeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FF7A00" />
+      <stop offset="100%" stop-color="#FF5400" />
+    </linearGradient>
+  </defs>
+
+  <!-- 3 Speed Lines on Left -->
+  <rect x="25" y="68" width="22" height="7" rx="3.5" fill="#FF6A00" />
+  <rect x="15" y="85" width="32" height="7" rx="3.5" fill="#FF6A00" />
+  <rect x="7" y="102" width="30" height="7" rx="3.5" fill="#FF6A00" />
+
+  <!-- Main 'A' Body -->
+  <path d="M104 12 C111 12 119 18 125 28 L168 116 C176 132 170 145 154 145 C144 145 138 138 133 128 L122 104 L74 104 L56 135 C50 143 42 145 34 145 C18 145 13 131 21 116 L82 28 C89 18 97 12 104 12 Z" fill="url(#iconOrangeGrad)" />
+
+  <!-- White Spoon Cutout -->
+  <!-- Spoon Bowl -->
+  <path d="M112 70 C118 70 126 80 121 93 C116 104 106 112 98 112 C91 112 88 105 92 97 C97 86 105 70 112 70 Z" fill="#FFFFFF" />
+  <!-- Spoon Handle -->
+  <path d="M99 107 L75 139 C71 144 64 147 57 144 C52 141 54 134 57 129 L86 97 Z" fill="#FFFFFF" />
+</svg>
